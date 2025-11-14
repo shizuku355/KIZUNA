@@ -1,8 +1,9 @@
-import type { Technique } from '../types';
+import type { Technique, Lang } from '../types';
 import { useState } from 'react';
 
 interface TechniqueLockerProps {
   techniques: Technique[];
+  lang: Lang;
 }
 
 const getRarityColor = (rarity: string) => {
@@ -25,7 +26,7 @@ const getCategoryIcon = (category: string) => {
   return icons[category as keyof typeof icons] || '❓';
 };
 
-export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
+export const TechniqueLocker = ({ techniques, lang }: TechniqueLockerProps) => {
   const [filter, setFilter] = useState<'all' | 'equipped' | 'unequipped'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
 
@@ -39,7 +40,9 @@ export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
       <div className="bg-gray-900 rounded-2xl p-6 shadow-2xl">
-        <h2 className="text-2xl font-bold mb-4 text-center">Technique Locker</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          {lang === 'ja' ? 'テクニックロッカー' : 'Technique Locker'}
+        </h2>
 
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-6">
@@ -50,7 +53,7 @@ export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
                 filter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              All ({techniques.length})
+              {lang === 'ja' ? 'すべて' : 'All'} ({techniques.length})
             </button>
             <button
               onClick={() => setFilter('equipped')}
@@ -58,7 +61,7 @@ export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
                 filter === 'equipped' ? 'bg-green-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              Equipped ({techniques.filter(t => t.equipped).length})
+              {lang === 'ja' ? '装備中' : 'Equipped'} ({techniques.filter(t => t.equipped).length})
             </button>
             <button
               onClick={() => setFilter('unequipped')}
@@ -66,7 +69,7 @@ export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
                 filter === 'unequipped' ? 'bg-orange-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
-              Available ({techniques.filter(t => !t.equipped).length})
+              {lang === 'ja' ? '未装備' : 'Available'} ({techniques.filter(t => !t.equipped).length})
             </button>
           </div>
 
@@ -79,7 +82,7 @@ export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
                   categoryFilter === cat ? 'bg-purple-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                 }`}
               >
-                {cat === 'all' ? 'All' : getCategoryIcon(cat)}
+                {cat === 'all' ? (lang === 'ja' ? 'All' : 'All') : getCategoryIcon(cat)}
               </button>
             ))}
           </div>
@@ -113,7 +116,9 @@ export const TechniqueLocker = ({ techniques }: TechniqueLockerProps) => {
 
         {filteredTechniques.length === 0 && (
           <div className="text-center text-gray-500 py-12">
-            No techniques found with current filters
+            {lang === 'ja'
+              ? 'この条件に合うテクニックがありません'
+              : 'No techniques found with current filters'}
           </div>
         )}
       </div>

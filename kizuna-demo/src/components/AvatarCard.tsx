@@ -1,7 +1,8 @@
-import type { Avatar } from '../types';
+import type { Avatar, Lang } from '../types';
 
 interface AvatarCardProps {
   avatar: Avatar;
+  lang: Lang;
 }
 
 const AuraGlow = ({ level }: { level: number }) => {
@@ -21,7 +22,7 @@ const AuraGlow = ({ level }: { level: number }) => {
   );
 };
 
-export const AvatarCard = ({ avatar }: AvatarCardProps) => {
+export const AvatarCard = ({ avatar, lang }: AvatarCardProps) => {
   return (
     <div className="relative w-full max-w-2xl mx-auto p-8">
       {/* Aura glow for venue attendees */}
@@ -59,15 +60,21 @@ export const AvatarCard = ({ avatar }: AvatarCardProps) => {
         <div className="flex justify-around mb-6 text-center">
           <div>
             <div className="text-2xl font-bold text-yellow-400">{avatar.equippedTechniques.length}</div>
-            <div className="text-xs text-gray-400">Equipped</div>
+            <div className="text-xs text-gray-400">
+              {lang === 'ja' ? '装備中' : 'Equipped'}
+            </div>
           </div>
           <div>
             <div className="text-2xl font-bold text-blue-400">{avatar.allTechniques.length}</div>
-            <div className="text-xs text-gray-400">Total Techniques</div>
+            <div className="text-xs text-gray-400">
+              {lang === 'ja' ? '習得技数' : 'Total Techniques'}
+            </div>
           </div>
           <div>
             <div className="text-2xl font-bold text-pink-400">{avatar.favorites.length}</div>
-            <div className="text-xs text-gray-400">Favorites</div>
+            <div className="text-xs text-gray-400">
+              {lang === 'ja' ? '推し' : 'Favorites'}
+            </div>
           </div>
         </div>
 
@@ -76,7 +83,9 @@ export const AvatarCard = ({ avatar }: AvatarCardProps) => {
         {/* Venue crest indicator (keep) */}
         {avatar.auraLevel > 0 && (
           <div className="absolute top-4 right-4 flex items-center gap-2">
-            <span className="text-yellow-400 text-xs font-semibold">VENUE WARRIOR</span>
+            <span className="text-yellow-400 text-xs font-semibold">
+              {lang === 'ja' ? '現地勢 VENUE WARRIOR' : 'VENUE WARRIOR'}
+            </span>
             <div className="flex gap-1">
               {[...Array(avatar.auraLevel)].map((_, i) => (
                 <div key={i} className="w-2 h-2 bg-yellow-400 rounded-full" />

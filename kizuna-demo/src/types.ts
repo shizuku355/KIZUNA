@@ -34,3 +34,5 @@ export interface Avatar {
   auraLevel: 0 | 1 | 2 | 3;
   name: string;
 }
+
+export type Lang = 'ja' | 'en';

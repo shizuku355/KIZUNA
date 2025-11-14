@@ -1,0 +1,15 @@
+[package]
+name = "kizuna"
+version = "0.0.1"
+
+[addresses]
+kizuna = "0x0"
+sui = "0x2"
+
+# NOTE:
+# Sui framework dependency is left as a placeholder.
+# Replace `framework-rev-placeholder` with a concrete git revision
+# that matches the Sui network you are targeting (devnet / testnet / mainnet).
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework-rev-placeholder" }
+

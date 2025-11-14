@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import type { Lang } from '../types';
 
 interface Comment {
   id: number;
@@ -13,7 +14,7 @@ const seedComments: Comment[] = [
   { id: 3, author: 'Riku', text: 'Waiting for the next mint call!', timestamp: '8 min ago' },
 ];
 
-export const LiveWatchDemo = () => {
+export const LiveWatchDemo = ({ lang }: { lang: Lang }) => {
   const [comments, setComments] = useState<Comment[]>(seedComments);
   const [draft, setDraft] = useState('');
   const [passcode, setPasscode] = useState('KIZUNA');
@@ -53,15 +54,19 @@ export const LiveWatchDemo = () => {
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/70 opacity-0 hover:opacity-100 transition-opacity" />
           <div className="absolute right-4 top-4 w-64 rounded-2xl border border-blue-500/50 bg-black/70 p-4 shadow-2xl backdrop-blur-md">
-            <p className="text-xs uppercase tracking-wider text-blue-300">Mint Window</p>
+            <p className="text-xs uppercase tracking-wider text-blue-300">
+              {lang === 'ja' ? 'ミントウィンドウ' : 'Mint Window'}
+            </p>
             <p className="text-sm text-gray-300">
-              Enter the live mint passcode and secure a new technique for Shizuku’s locker.
+              {lang === 'ja'
+                ? 'ライブ中に告知されるパスコードを入力して、Shizuku のロッカーに新しい技をミントします。'
+                : 'Enter the live mint passcode and secure a new technique for Shizuku’s locker.'}
             </p>
             <div className="mt-3 flex flex-col gap-2">
               <input
                 value={passcode}
                 onChange={e => setPasscode(e.target.value)}
-                placeholder="Live passcode"
+                placeholder={lang === 'ja' ? 'ライブ用パスコード' : 'Live passcode'}
                 className="w-full rounded-xl border border-blue-500/70 bg-black/40 px-3 py-2 text-sm text-white focus:border-blue-400 focus:outline-none"
               />
               <button
@@ -69,7 +74,7 @@ export const LiveWatchDemo = () => {
                 disabled={!canMint}
                 className="rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-white disabled:opacity-50"
               >
-                Mint Technique
+                {lang === 'ja' ? '技をミント' : 'Mint Technique'}
               </button>
             </div>
             {mintMessage && (
@@ -78,18 +83,25 @@ export const LiveWatchDemo = () => {
           </div>
         </div>
         <div className="bg-gradient-to-r from-yellow-500/10 to-orange-500/10 rounded-2xl border border-yellow-600/50 p-4 text-sm text-gray-200">
-          <p className="font-semibold text-white mb-1">Live Watch Demo</p>
+          <p className="font-semibold text-white mb-1">
+            {lang === 'ja' ? 'ライブ視聴デモ' : 'Live Watch Demo'}
+          </p>
           <p className="text-gray-400">
-            Video embed powered by ONE Championship’s official channel. In the full product this panel
-            will surface real-time stream metadata, mint windows, and light-up badges based on your watched time.
+            {lang === 'ja'
+              ? 'ONE Championship 公式チャンネルの動画埋め込み例です。本番環境ではここにリアルタイムの配信メタデータやミントウィンドウ、視聴時間に応じたバッジを表示します。'
+              : 'Video embed powered by ONE Championship’s official channel. In the full product this panel will surface real-time stream metadata, mint windows, and light-up badges based on your watched time.'}
           </p>
         </div>
       </div>
 
       <div className="flex flex-col gap-4 rounded-2xl border border-gray-800 bg-gray-900/60 p-4 shadow-lg">
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Live Comments</h3>
-          <span className="text-xs text-gray-400">{comments.length} online</span>
+          <h3 className="text-lg font-semibold">
+            {lang === 'ja' ? 'ライブコメント' : 'Live Comments'}
+          </h3>
+          <span className="text-xs text-gray-400">
+            {comments.length} {lang === 'ja' ? 'online' : 'online'}
+          </span>
         </div>
         <div className="space-y-3 overflow-y-auto max-h-80">
           {comments.map(comment => (
@@ -105,7 +117,11 @@ export const LiveWatchDemo = () => {
         <textarea
           value={draft}
           onChange={e => setDraft(e.target.value)}
-          placeholder="Cheer, react, or drop a favorite technique…"
+          placeholder={
+            lang === 'ja'
+              ? '応援・リアクション・お気に入りの技を書き込もう…'
+              : 'Cheer, react, or drop a favorite technique…'
+          }
           className="min-h-[80px] w-full resize-none rounded-xl border border-gray-800 bg-black/50 px-3 py-2 text-sm text-gray-100 placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"
         />
         <button
@@ -113,7 +129,7 @@ export const LiveWatchDemo = () => {
           disabled={!canSubmit}
           className="self-end rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-4 py-2 text-sm font-semibold text-white transition hover:from-blue-600 hover:to-cyan-600 disabled:opacity-50"
         >
-          Post comment
+          {lang === 'ja' ? 'コメントを送信' : 'Post comment'}
         </button>
       </div>
     </div>
