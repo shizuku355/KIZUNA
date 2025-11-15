@@ -125,12 +125,12 @@ export function GamePage({ avatar, lang }: GamePageProps) {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-gray-800/80 bg-gray-950/60 p-4 text-sm text-gray-300 space-y-2">
+      <div className="space-y-4 md:flex md:space-y-0 md:gap-4">
+        <div className="flex-1 rounded-2xl border border-gray-800/80 bg-gray-950/60 p-4 text-sm text-gray-300 space-y-2">
           <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
             {lang === 'ja' ? 'Technique Icons' : 'Technique Icons'}
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 justify-between">
             {(['Strike', 'Grapple', 'Counter'] as const).map(attr => (
               <div key={attr} className="flex flex-col items-center gap-1 text-[11px] text-gray-300">
                 <div className="h-12 w-12 rounded-full border border-yellow-500/40 bg-black/60 p-3 shadow-lg">
@@ -159,7 +159,7 @@ export function GamePage({ avatar, lang }: GamePageProps) {
               : 'These three attributes form the rock-paper-scissors triangle that decides each round and feeds your aura.'}
           </p>
         </div>
-        <div className="rounded-2xl border border-yellow-500/70 bg-gradient-to-br from-yellow-500/10 to-transparent p-4 text-sm text-gray-200 space-y-2">
+        <div className="flex-1 rounded-2xl border border-yellow-500/70 bg-gradient-to-br from-yellow-500/10 to-transparent p-4 text-sm text-gray-200 space-y-2">
           <p className="text-xs uppercase tracking-[0.3em] text-yellow-200">
             {lang === 'ja' ? 'Battle Highlight' : 'Battle Highlight'}
           </p>
@@ -178,17 +178,42 @@ export function GamePage({ avatar, lang }: GamePageProps) {
         </div>
       </div>
 
-      <div className="space-y-2 text-sm text-gray-300">
-        <p>
-          {lang === 'ja'
-            ? 'この画面は RPG 的なグラフィックを借りて、アバターのロードアウト → ラウンド演出 → Aura への反映というストーリーを伝えるための演出スペースです。'
-            : 'This view uses RPG-like graphics to show the flow of loadout selection → round drama → aura feedback.'}
-        </p>
-        <p className="text-xs text-gray-500">
-          {lang === 'ja'
-            ? '将来的にはライブ視聴 Drop や参加イベントで追加された技をここで入れ替え、結果を Move コントラクトに記録することでファン活動を証明します。'
-            : 'In the future, live drops and event tech can slot into these slots, and results will be recorded on-chain to show fan activity.'}
-        </p>
+      <div className="md:flex md:items-start md:gap-4">
+        <div className="flex-1 rounded-3xl border border-purple-500/70 bg-black p-4">
+          <h3 className="text-lg font-semibold text-white mb-2">
+            {lang === 'ja' ? 'GAME イメージ' : 'GAME visual'}
+          </h3>
+          <div className="flex justify-center">
+            <div className="overflow-hidden rounded-2xl border border-gray-700 bg-black w-3/4">
+              <img src="/game.png" alt="Technique battle visual" className="w-full block object-cover" />
+            </div>
+          </div>
+          <p className="mt-3 text-sm text-gray-300">
+            {lang === 'ja'
+              ? 'そのままゲーム画面として見せられる、Strike / Grapple / Counter の一斉発動イメージ。無加工でどアップ表示することで、ライブ感を演出します。'
+              : 'A direct shot of the Strike / Grapple / Counter explosion. Displaying it full-size without effects makes the battle feel like a real gameplay screen.'}
+          </p>
+        </div>
+        <div className="flex-1 rounded-3xl border border-gray-800/70 bg-gray-950/60 p-4 mt-4 md:mt-0">
+          <p className="text-xs uppercase tracking-[0.3em] text-gray-400">
+            {lang === 'ja' ? 'テクニックバトル' : 'Technique Battle'}
+          </p>
+          <h3 className="text-xl font-bold text-white mt-1">
+            {lang === 'ja'
+              ? '3 スロットで技を配置'
+              : 'Choose a loadout of 3 techniques'}
+          </h3>
+          <p className="text-xs text-gray-500 mt-2">
+            {lang === 'ja'
+              ? 'この枠内では三すくみを意識した UI を整え、ラウンド制のバトルらしさを演出。'
+              : 'This panel keeps track of the rock-paper-scissors flow, making each round feel like a proper match.'}
+          </p>
+          <div className="mt-4 space-y-2 text-sm text-gray-300">
+            <p>- {lang === 'ja' ? 'Strike は攻撃特化' : 'Strike: aggressive finish'}</p>
+            <p>- {lang === 'ja' ? 'Grapple は制圧' : 'Grapple: control and grip'}</p>
+            <p>- {lang === 'ja' ? 'Counter は翻弄' : 'Counter: turn the tables'}</p>
+          </div>
+        </div>
       </div>
     </div>
   );
