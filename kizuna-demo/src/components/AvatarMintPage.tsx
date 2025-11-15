@@ -3,6 +3,7 @@ import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-ki
 import { Transaction } from '@mysten/sui/transactions';
 
 import type { Lang } from '../types';
+import WALRUS_BLOB_IDS from '../assets/walrus_blob_ids.json';
 import { KIZUNA_CHAIN, KIZUNA_PACKAGE_ID } from '../lib/contractConfig';
 
 type AvatarTemplate = {
@@ -78,13 +79,18 @@ const AVATAR_TEMPLATES: AvatarTemplate[] = [
   },
 ];
 
+const WALRUS_BLOB_ID_MAP = WALRUS_BLOB_IDS as Record<string, string>;
+const existsBlobId = (id: string) => Boolean(WALRUS_BLOB_ID_MAP[id]);
+
 export function AvatarMintPage({ lang }: { lang: Lang }) {
   const currentAccount = useCurrentAccount();
-  const [selectedId, setSelectedId] = useState<string>(AVATAR_TEMPLATES[0]?.id ?? '');
+  const initialSelection = AVATAR_TEMPLATES.find(template => existsBlobId(template.id)) ?? AVATAR_TEMPLATES[0];
+  const [selectedId, setSelectedId] = useState<string>(initialSelection?.id ?? '');
   const [lastDigest, setLastDigest] = useState<string | null>(null);
   const { mutate: signAndExecuteTransaction, isPending } = useSignAndExecuteTransaction();
 
   const selected = AVATAR_TEMPLATES.find(t => t.id === selectedId) ?? AVATAR_TEMPLATES[0];
+  const selectedBlobId = selected ? WALRUS_BLOB_ID_MAP[selected.id] : undefined;
 
   const handleMint = () => {
     if (!currentAccount || !selected) return;
@@ -139,7 +145,7 @@ export function AvatarMintPage({ lang }: { lang: Lang }) {
                 key={template.id}
                 type="button"
                 onClick={() => setSelectedId(template.id)}
-                className={`relative overflow-hidden rounded-2xl border p-3 text-left transition transform hover:scale-[1.02] ${
+                className={`relative overflow-hidden rounded-2xl border p-3 text-left transition-transform hover:scale-[1.02] ${
                   selectedId === template.id
                     ? 'border-yellow-500 bg-yellow-500/10 shadow-xl'
                     : 'border-gray-800 bg-black/50'
@@ -201,6 +207,11 @@ export function AvatarMintPage({ lang }: { lang: Lang }) {
                 ? 'ミント後は、Move コントラクト上の Avatar オブジェクトに Aura やスタンプ、テクニックが紐づいていきます。'
                 : 'After minting, the Move Avatar object will track your aura, stamps, and techniques over time.'}
             </p>
+            {selectedBlobId && (
+              <p className="text-xs text-green-400 break-all">
+                {lang === 'ja' ? 'ウォルラス Blob ID:' : 'Walrus Blob ID:'} {selectedBlobId}
+              </p>
+            )}
             {lastDigest && (
               <p className="text-xs text-green-400 break-all">
                 {lang === 'ja' ? '最新トランザクション: ' : 'Last transaction: '}

@@ -1,5 +1,4 @@
 module kizuna::avatar {
-    use std::vector;
     use sui::event;
 
     /// Error codes
@@ -54,6 +53,7 @@ module kizuna::avatar {
             wins: 0,
             losses: 0,
             draws: 0,
+            walrus_blob_id: option::none(),
         };
         sui::transfer::transfer(avatar, owner);
     }
@@ -157,7 +157,12 @@ module kizuna::avatar {
 
     /// Return the blob ID that is currently associated with this Avatar.
     public fun walrus_blob_id(avatar: &Avatar): Option<vector<u8>> {
-        avatar.walrus_blob_id.clone()
+        if (option::is_some(&avatar.walrus_blob_id)) {
+            let blob = option::borrow(&avatar.walrus_blob_id);
+            option::some(clone_vector(blob))
+        } else {
+            option::none()
+        }
     }
 
     /// Update the blob ID shown for the Avatar (owner-only).
@@ -168,5 +173,17 @@ module kizuna::avatar {
     ) {
         assert_sender_is_owner(avatar, ctx);
         avatar.walrus_blob_id = blob_id;
+    }
+
+    fun clone_vector(src: &vector<u8>): vector<u8> {
+        let mut out = vector::empty();
+        let len = src.length();
+        let mut idx = 0;
+        while (idx < len) {
+            let byte = src[idx];
+            out.push_back(byte);
+            idx = idx + 1;
+        };
+        out
     }
 }

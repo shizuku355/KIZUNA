@@ -4,8 +4,7 @@
 //   the Move package (e.g. on testnet).
 // - Adjust `KIZUNA_CHAIN` if you deploy to a different network.
 
-export const KIZUNA_PACKAGE_ID = '0xYOUR_KIZUNA_PACKAGE_ID';
+export const KIZUNA_PACKAGE_ID = '0xab8367d1ffbc4f4ecc580fa4af45e0221bac49e847fe6b1e580bd46724deb267';
 
 // Chain identifier for dapp-kit. For testnet use 'sui:testnet'.
 export const KIZUNA_CHAIN = 'sui:testnet';
-
