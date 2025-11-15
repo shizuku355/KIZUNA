@@ -55,6 +55,15 @@
 - Isolates admin operations in `admin.move` for security and auditability
 - Keeps implementation details private or package-scoped in other modules
 
+## Move 2024 エディションのビルドTips
+- `Move.toml` には必ず `edition = "2024"` を記載し、新API（`vector::clone` など）を利用可能にする。
+- `use sui::object::{self, UID}` のような `self` alias は無効。`use sui::object::UID;` か `use sui::object;` に置き換え、`object::new` のようにモジュール名でアクセスする。
+- 2024 edition では **全ての struct 宣言に visibility が必須**。公開したい struct は `public struct` / `public(package) struct` を付与し、デフォルト private で留めたいものは別ファイルに閉じ込める。
+- Dynamic Field 操作で親オブジェクトの内部フィールドを直接触らず、親モジュールに `pub fun avatar_id(_mut)` のようなアクセサを用意して経由させる。
+- 文字列・ベクター操作は `use std::string; use std::vector;` を追加し、`string::to_bytes`, `vector::clone` のような free function を使用する。
+- `entry` は本当にトランザクション入口として必要な関数だけに付ける。一般的なロジックは `public` / `public(package)` に切り出し、`entry` は薄いラッパーにとどめる。
+- `dynamic_object_field::exists/add/borrow_mut` は最新版APIを使用し、キーの `vector<u8>` は所有権が必要なので `vector::clone` で複製して渡す。
+
 ## Contract Testing
 - Sui CLI tests live in `contracts/tests/` and run via `sui move test --path contracts`; keep each test file focused on one capability (e.g., mint lifecycle).
 - From the repo root, `sui move build` and `sui move test` (run inside `contracts/`) compile the package and execute the Move test suites defined under `contracts/tests/`.
