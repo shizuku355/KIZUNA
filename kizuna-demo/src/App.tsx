@@ -6,8 +6,10 @@ import { WalletConnect } from './components/WalletConnect';
 import { mockAvatar } from './mockData';
 import type { Avatar, Lang } from './types';
 import { GamePage } from './components/GamePage';
+import { AvatarMintPage } from './components/AvatarMintPage';
 
 const navTabs = [
+  { key: 'setup', labelEn: 'Start', labelJa: 'はじめる' },
   { key: 'home', labelEn: 'Home', labelJa: 'ホーム' },
   { key: 'live', labelEn: 'Live', labelJa: 'ライブ' },
   { key: 'locker', labelEn: 'Locker', labelJa: 'ロッカー' },
@@ -125,6 +127,8 @@ function App() {
 
       {/* Main content */}
       <main className="container mx-auto px-4 py-8 relative z-10 space-y-10">
+        {view === 'setup' && <AvatarMintPage lang={lang} />}
+
         {view === 'home' && (
           <div className="space-y-10">
             <AvatarCard avatar={selectedAvatar} lang={lang} />

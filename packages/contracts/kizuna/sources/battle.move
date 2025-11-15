@@ -1,6 +1,6 @@
 module kizuna::battle {
-    use sui::object::{Self, UID};
-    use sui::tx_context::{Self, TxContext};
+    use sui::object::{self, UID};
+    use sui::tx_context::{self, TxContext};
     use sui::clock::{Self, Clock};
     use sui::event;
     use sui::transfer;
@@ -31,7 +31,7 @@ module kizuna::battle {
     /// One-time initializer to create the BattleAdminCap.
     /// The cap is transferred to the transaction sender and should be kept
     /// by the backend service that records battles.
-    public entry fun init(ctx: &mut TxContext) {
+    entry fun init_admin_cap(ctx: &mut TxContext) {
         let id = object::new(ctx);
         let cap = BattleAdminCap { id };
         let sender = tx_context::sender(ctx);
@@ -43,7 +43,7 @@ module kizuna::battle {
     /// - `admin` must be present to authorize the call.
     /// - `winner`: 0 = Draw, 1 = avatar_a wins, 2 = avatar_b wins.
     /// - `ruleset`: 0 = RPS_V1.
-    public entry fun record_battle(
+    entry fun record_battle(
         _admin: &BattleAdminCap,
         avatar_a: &mut avatar::Avatar,
         avatar_b: &mut avatar::Avatar,

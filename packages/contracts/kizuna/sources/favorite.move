@@ -1,8 +1,9 @@
 module kizuna::favorite {
-    use sui::object::{Self, UID};
+    use sui::object::{self, UID};
     use sui::dynamic_object_field;
-    use sui::string::{Self, String};
-    use sui::tx_context::{Self, TxContext};
+    use sui::tx_context::{self, TxContext};
+    use std::string;
+    use std::vector;
 
     use kizuna::avatar;
 
@@ -13,7 +14,7 @@ module kizuna::favorite {
     struct Favorite has key, store {
         id: UID,
         kind: u8,      // 0:選手,1:競技,2:チーム,3:国
-        fav_id: String,
+        fav_id: string::String,
         since_ms: u64,
         score: u64,
     }
@@ -21,19 +22,24 @@ module kizuna::favorite {
     /// Set or replace a favorite entry for the given Avatar.
     ///
     /// Key = fav_id bytes（kind はオブジェクトのフィールドで保持）
-    public entry fun set_favorite(
+    entry fun set_favorite(
         avatar_obj: &mut avatar::Avatar,
         kind: u8,
-        fav_id: String,
+        fav_id: string::String,
         since_ms: u64,
         score: u64,
         ctx: &mut TxContext,
     ) {
-        let key = string::into_bytes(string::clone(&fav_id));
+        let key_bytes = string::to_bytes(&fav_id);
 
-        if (dynamic_object_field::exists<vector<u8>, Favorite>(&avatar_obj.id, &key)) {
-            // Replace existing favorite in-place.
-            let fav = dynamic_object_field::borrow_mut<vector<u8>, Favorite>(&mut avatar_obj.id, &key);
+        if (dynamic_object_field::exists<vector<u8>, Favorite>(
+            avatar::avatar_id(avatar_obj),
+            vector::clone(&key_bytes),
+        )) {
+            let fav = dynamic_object_field::borrow_mut<vector<u8>, Favorite>(
+                avatar::avatar_id_mut(avatar_obj),
+                vector::clone(&key_bytes),
+            );
             fav.since_ms = since_ms;
             fav.score = score;
         } else {
@@ -45,7 +51,11 @@ module kizuna::favorite {
                 since_ms,
                 score,
             };
-            dynamic_object_field::add(&mut avatar_obj.id, key, fav);
+            dynamic_object_field::add(
+                avatar::avatar_id_mut(avatar_obj),
+                vector::clone(&key_bytes),
+                fav,
+            );
         };
 
         // Optionally: hook into aura scoring via score / favorites count.

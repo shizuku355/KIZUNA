@@ -1,7 +1,7 @@
 module kizuna::avatar {
-    use sui::object::{Self, UID};
+    use sui::object::{self, UID};
     use sui::transfer;
-    use sui::tx_context::{Self, TxContext};
+    use sui::tx_context::{self, TxContext};
     use sui::event;
 
     /// Error codes
@@ -9,11 +9,9 @@ module kizuna::avatar {
 
     /// Core SBT avatar object.
     ///
-    /// In practice this is treated as non-transferable (SBT) at the app layer:
-    /// we never expose a transfer entry function, and frontends treat it as
-    /// bound to the original owner. The Move-level SBT pattern can be
-    /// strengthened later if needed.
-    public struct Avatar has key {
+    /// Treated as non-transferable at the app layer. Frontends rely on aura,
+    /// stamps, and techniques stored alongside this SBT.
+    struct Avatar has key {
         id: UID,
         /// Current logical owner of the avatar.
         owner: address,
@@ -72,6 +70,16 @@ module kizuna::avatar {
         assert!(sender == avatar.owner, ENotOwner);
     }
 
+    /// Mutable access to the UID for Dynamic Field helpers.
+    public fun avatar_id_mut(avatar: &mut Avatar): &mut UID {
+        &mut avatar.id
+    }
+
+    /// Immutable access to the UID.
+    public fun avatar_id(avatar: &Avatar): &UID {
+        &avatar.id
+    }
+
     /// Increase total_stamps counter (to be called from stamps module).
     public fun increment_stamps(avatar: &mut Avatar, delta: u64) {
         avatar.total_stamps = avatar.total_stamps + delta;
@@ -80,6 +88,10 @@ module kizuna::avatar {
     /// Increase equipped technique count (to be called from technique module).
     public fun increment_equipped(avatar: &mut Avatar, delta: u8) {
         avatar.equipped_tech_count = avatar.equipped_tech_count + delta;
+    }
+    /// Return equipped count.
+    public fun equipped_count(avatar: &Avatar): u8 {
+        avatar.equipped_tech_count
     }
 
     /// Decrease equipped technique count (to be called from technique module).
@@ -125,7 +137,7 @@ module kizuna::avatar {
 
     /// Recalculate aura_level and emit AuraLevelChangedEvent if it changed.
     /// Returns true if aura_level was updated.
-    public fun recalc_aura_level(avatar: &mut Avatar, ctx: &mut TxContext): bool {
+    public fun recalc_aura_level(avatar: &mut Avatar, _ctx: &mut TxContext): bool {
         let score = compute_aura_score(avatar);
         let new_level = aura_level_from_score(score);
         if (new_level == avatar.aura_level) {

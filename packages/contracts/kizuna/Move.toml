@@ -1,6 +1,7 @@
 [package]
 name = "kizuna"
 version = "0.0.1"
+edition = "2024"
 
 [addresses]
 kizuna = "0x0"
@@ -11,5 +12,8 @@ sui = "0x2"
 # Replace `framework-rev-placeholder` with a concrete git revision
 # that matches the Sui network you are targeting (devnet / testnet / mainnet).
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework-rev-placeholder" }
-
+# NOTE:
+# - `framework/testnet` は Sui testnet 向けのフレームワークブランチです。
+# - mainnet 等にデプロイする場合は、CLI / Docs に合わせて
+#   `framework/mainnet` や特定のコミットハッシュに変更してください。
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "framework/testnet" }
