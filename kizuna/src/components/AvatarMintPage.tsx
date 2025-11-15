@@ -81,6 +81,7 @@ const AVATAR_TEMPLATES: AvatarTemplate[] = [
 
 const WALRUS_BLOB_ID_MAP = WALRUS_BLOB_IDS as Record<string, string>;
 const existsBlobId = (id: string) => Boolean(WALRUS_BLOB_ID_MAP[id]);
+const isPlaceholderPackageId = KIZUNA_PACKAGE_ID.includes('YOUR');
 
 export function AvatarMintPage({ lang }: { lang: Lang }) {
   const currentAccount = useCurrentAccount();
@@ -94,7 +95,7 @@ export function AvatarMintPage({ lang }: { lang: Lang }) {
 
   const handleMint = () => {
     if (!currentAccount || !selected) return;
-    if (!KIZUNA_PACKAGE_ID || KIZUNA_PACKAGE_ID === '0xYOUR_KIZUNA_PACKAGE_ID') {
+    if (isPlaceholderPackageId) {
       // Package ID 未設定時は何もしない（デモ環境用ガード）。
       alert('KIZUNA_PACKAGE_ID を設定してからミントしてください。');
       return;

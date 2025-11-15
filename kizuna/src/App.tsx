@@ -207,7 +207,7 @@ function App() {
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {featureHighlights.map(card => (
                 <div
-                  key={card.title}
+                  key={`${card.titleEn}-${card.titleJa}`}
                   className="rounded-3xl border border-gray-800/60 bg-gray-950/60 p-6 text-sm shadow-xl"
                 >
                   <div className="text-3xl">{card.icon}</div>
