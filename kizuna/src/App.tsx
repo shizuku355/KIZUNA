@@ -7,6 +7,7 @@ import { mockAvatar } from './mockData';
 import type { Avatar, Lang } from './types';
 import { GamePage } from './components/GamePage';
 import { AvatarMintPage } from './components/AvatarMintPage';
+import { DocsPage } from './components/DocsPage';
 
 const navTabs = [
   { key: 'setup', labelEn: 'Start', labelJa: 'はじめる' },
@@ -15,6 +16,7 @@ const navTabs = [
   { key: 'locker', labelEn: 'Locker', labelJa: 'ロッカー' },
   { key: 'game', labelEn: 'Game', labelJa: 'ゲーム' },
   { key: 'plaza', labelEn: 'KIZUNA Plaza', labelJa: 'KIZUNAプラザ' },
+  { key: 'docs', labelEn: 'Docs', labelJa: 'ドキュメント' },
 ] as const;
 
 function App() {
@@ -288,6 +290,12 @@ function App() {
                 </p>
               </div>
             </div>
+          </div>
+        )}
+
+        {view === 'docs' && (
+          <div className="rounded-3xl border border-gray-800/70 bg-gray-950/60 p-6 shadow-2xl">
+            <DocsPage lang={lang} />
           </div>
         )}
       </main>
