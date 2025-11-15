@@ -1,4 +1,5 @@
 module kizuna::avatar {
+    use std::vector;
     use sui::event;
 
     /// Error codes
@@ -28,6 +29,7 @@ module kizuna::avatar {
         wins: u32,
         losses: u32,
         draws: u32,
+        walrus_blob_id: Option<vector<u8>>,
     }
 
     /// Emitted whenever aura_level changes.
@@ -151,5 +153,20 @@ module kizuna::avatar {
         });
 
         true
+    }
+
+    /// Return the blob ID that is currently associated with this Avatar.
+    public fun walrus_blob_id(avatar: &Avatar): Option<vector<u8>> {
+        avatar.walrus_blob_id.clone()
+    }
+
+    /// Update the blob ID shown for the Avatar (owner-only).
+    public fun set_walrus_blob_id(
+        avatar: &mut Avatar,
+        blob_id: Option<vector<u8>>,
+        ctx: &mut sui::tx_context::TxContext,
+    ) {
+        assert_sender_is_owner(avatar, ctx);
+        avatar.walrus_blob_id = blob_id;
     }
 }
