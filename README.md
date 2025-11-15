@@ -26,6 +26,8 @@ KIZUNA は、ONE Championship の「推し活」をまるごと dNFT に閉じ�
   - Aura Level（0〜3）
 - 画像自体は Walrus に保存したテンプレートを使い、Move 側には Blob ID だけを持たせることで、後から表示画像を差し替えられる構造にしています。
 
+![KIZUNA Avatar サンプル](kizuna-demo/public/sample_avatar2.png)
+
 ---
 
 ### 推し活要素
@@ -101,6 +103,10 @@ KIZUNA は、ONE Championship の「推し活」をまるごと dNFT に閉じ�
 - フロントでは Aura Level に応じて **色と輝きが変わるオーラ** を表示し、  
   「推し活をがんばった分だけアバターが光る」dNFT 体験になります。
 
+| Aura Level 1 | Aura Level 2 | Aura Level 3 |
+|-------------|--------------|--------------|
+| ![Aura Level 1](kizuna-demo/public/Level1.png) | ![Aura Level 2](kizuna-demo/public/Level2.png) | ![Aura Level 3](kizuna-demo/public/Level3.png) |
+
 ---
 
 ### Sui / Walrus / Seal の活用
@@ -145,6 +151,8 @@ All of this activity feeds into a **Soulbound Avatar** whose Aura evolves in thr
   - Aura level (0–3)
 - The visual template (image) is stored off-chain on **Walrus**, while the Move contract only stores the Walrus **Blob ID**.  
   This makes updating the avatar image as simple as changing a blob reference, without redeploying contracts.
+
+![KIZUNA Avatar Sample](kizuna-demo/public/sample_avatar2.png)
 
 ---
 
@@ -223,6 +231,10 @@ Aura is the **visual representation of your fandom**.
   - `watch_score`
   - Favorites and possibly battle stats
 - The front-end then maps each level to a different **glow color and strength**, so your avatar literally lights up as you support more.
+
+| Aura Level 1 | Aura Level 2 | Aura Level 3 |
+|-------------|--------------|--------------|
+| ![Aura Level 1](kizuna-demo/public/Level1.png) | ![Aura Level 2](kizuna-demo/public/Level2.png) | ![Aura Level 3](kizuna-demo/public/Level3.png) |
 
 ---
 
