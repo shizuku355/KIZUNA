@@ -26,7 +26,7 @@ KIZUNA は、ONE Championship の「推し活」をまるごと dNFT に閉じ�
   - Aura Level（0〜3）
 - 画像自体は Walrus に保存したテンプレートを使い、Move 側には Blob ID だけを持たせることで、後から表示画像を差し替えられる構造にしています。
 
-![KIZUNA Avatar サンプル](kizuna-demo/public/sample_avatar2.png)
+![KIZUNA Avatar サンプル](kizuna/public/sample_avatar2.png)
 
 ---
 
@@ -105,7 +105,7 @@ KIZUNA は、ONE Championship の「推し活」をまるごと dNFT に閉じ�
 
 | Aura Level 1 | Aura Level 2 | Aura Level 3 |
 |-------------|--------------|--------------|
-| ![Aura Level 1](kizuna-demo/public/Level1.png) | ![Aura Level 2](kizuna-demo/public/Level2.png) | ![Aura Level 3](kizuna-demo/public/Level3.png) |
+| ![Aura Level 1](kizuna/public/Level1.png) | ![Aura Level 2](kizuna/public/Level2.png) | ![Aura Level 3](kizuna/public/Level3.png) |
 
 ---
 
@@ -152,7 +152,7 @@ All of this activity feeds into a **Soulbound Avatar** whose Aura evolves in thr
 - The visual template (image) is stored off-chain on **Walrus**, while the Move contract only stores the Walrus **Blob ID**.  
   This makes updating the avatar image as simple as changing a blob reference, without redeploying contracts.
 
-![KIZUNA Avatar Sample](kizuna-demo/public/sample_avatar2.png)
+![KIZUNA Avatar Sample](kizuna/public/sample_avatar2.png)
 
 ---
 
@@ -234,7 +234,7 @@ Aura is the **visual representation of your fandom**.
 
 | Aura Level 1 | Aura Level 2 | Aura Level 3 |
 |-------------|--------------|--------------|
-| ![Aura Level 1](kizuna-demo/public/Level1.png) | ![Aura Level 2](kizuna-demo/public/Level2.png) | ![Aura Level 3](kizuna-demo/public/Level3.png) |
+| ![Aura Level 1](kizuna/public/Level1.png) | ![Aura Level 2](kizuna/public/Level2.png) | ![Aura Level 3](kizuna/public/Level3.png) |
 
 ---
 
